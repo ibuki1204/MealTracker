@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>食事管理アプリ</title>
+  <style>
+    /* 全体レイアウト */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    header {
+      background-color: #6c757d;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    /* ナビゲーション */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background: #495057;
+      padding: 0.5rem 0;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* メインコンテンツ */
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* 食事カード */
+    .meal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .meal-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .meal-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .meal-card h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #444;
+    }
+
+    .meal-card p {
+      margin: 0.3rem 0;
+    }
+
+    /* 合計カロリー */
+    .total {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    /* ボタン */
+    .add-btn {
+      display: block;
+      margin: 2rem auto;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #28a745;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .add-btn:hover {
+      background-color: #218838;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>🍽 食事管理アプリ</header>
+
+  <nav>
+    <a href="#">ホーム</a>
+    <a href="#">履歴</a>
+    <a href="#">設定</a>
+  </nav>
+
+  <main>
+    <h2>今日の食事</h2>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <h3>朝食</h3>
+        <p>・ご飯</p>
+        <p>・味噌汁</p>
+        <p>カロリー: 450 kcal</p>
+      </div>
+      <div class="meal-card">
+        <h3>昼食</h3>
+        <p>・ラーメン</p>
+        <p>カロリー: 600 kcal</p>
+      </div>
+      <div class="meal-card">
+        <h3>夕食</h3>
+        <p>・焼き魚定食</p>
+        <p>カロリー: 550 kcal</p>
+      </div>
+      <div class="meal-card">
+        <h3>間食</h3>
+        <p>・チョコレート</p>
+        <p>カロリー: 200 kcal</p>
+      </div>
+    </div>
+
+    <div class="total">合計: 1800 kcal</div>
+
+    <button class="add-btn">＋ 食事を追加</button>
+  </main>
+
+</body>
+</html>
