@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ meal.name }} を編集</title>
+  <style>
+    body { font-family: 'Roboto', sans-serif; margin: 2rem; }
+    form { max-width: 500px; margin: auto; }
+    label { display: block; margin-top: 1rem; }
+    input, textarea { width: 100%; padding: 0.5rem; margin-top: 0.5rem; }
+    button { margin-top: 1rem; padding: 0.8rem 1.5rem; background: #007bff; color: #fff; border: none; border-radius: 25px; cursor: pointer; }
+    button:hover { background: #0069d9; }
+    a { display: inline-block; margin-top: 1rem; color: #6c757d; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2>✏️ {{ meal.name }} を編集</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">更新</button>
+  </form>
+  <p><a href="{% url 'index' %}">← 一覧に戻る</a></p>
+</body>
+</html>

@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>食事管理アプリ</title>
+  <title>{{ title }}</title>
   <style>
-    /* 全体レイアウト */
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f4f6f9;
@@ -13,8 +12,6 @@
       padding: 0;
       color: #333;
     }
-
-    /* ヘッダー */
     header {
       background-color: #6c757d;
       color: #fff;
@@ -22,8 +19,6 @@
       text-align: center;
       font-size: 1.5rem;
     }
-
-    /* ナビゲーション */
     nav {
       display: flex;
       justify-content: center;
@@ -39,21 +34,16 @@
     nav a:hover {
       text-decoration: underline;
     }
-
-    /* メインコンテンツ */
     main {
       max-width: 900px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
-
-    /* 食事カード */
     .meal-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1.5rem;
     }
-
     .meal-card {
       background: #fff;
       padding: 1rem;
@@ -64,26 +54,34 @@
     .meal-card:hover {
       transform: translateY(-3px);
     }
-
     .meal-card h3 {
       margin-top: 0;
       font-size: 1.2rem;
       color: #444;
     }
-
     .meal-card p {
       margin: 0.3rem 0;
     }
-
-    /* 合計カロリー */
+    .delete-btn {
+      margin-top: 0.8rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+      color: #fff;
+      background-color: #dc3545;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
     .total {
       margin-top: 2rem;
       text-align: center;
       font-size: 1.3rem;
       font-weight: bold;
     }
-
-    /* ボタン */
     .add-btn {
       display: block;
       margin: 2rem auto;
@@ -95,53 +93,62 @@
       border-radius: 25px;
       cursor: pointer;
       transition: background 0.3s;
+      text-align: center;
+      text-decoration: none;
     }
     .add-btn:hover {
       background-color: #218838;
     }
-
   </style>
 </head>
 <body>
 
-  <header>🍽 食事管理アプリ</header>
+  <header>🍽 {{ title }}</header>
 
   <nav>
-    <a href="#">ホーム</a>
-    <a href="#">履歴</a>
+    <a href="/main">ホーム</a>
+    <a href="/main/create">追加</a>
     <a href="#">設定</a>
   </nav>
 
   <main>
-    <h2>今日の食事</h2>
+    <form method="get" style="text-align:center; margin-bottom:1.5rem;">
+  <input type="text" name="q" placeholder="食事名で検索" value="{{ query }}" style="padding:0.5rem; width:200px; border-radius:5px; border:1px solid #ccc;">
+  <button type="submit" style="padding:0.5rem 1rem; border:none; border-radius:5px; background:#007bff; color:#fff; cursor:pointer;">検索</button>
+</form>
+
+    <h2>{{ message }}</h2>
     <div class="meal-grid">
+      {% for meal in meals %}
       <div class="meal-card">
-        <h3>朝食</h3>
-        <p>・ご飯</p>
-        <p>・味噌汁</p>
-        <p>カロリー: 450 kcal</p>
+        <h3>{{ meal.name }}</h3>
+        <p>{{ meal.description }}</p>
+        <p>カロリー: {{ meal.calories }} kcal</p>
+        
+
+        <!-- 編集ボタン -->
+        <a href="{% url 'update' meal.id %}" style="display:inline-block; margin-top:0.5rem; padding:0.4rem 1rem; background:#007bff; color:#fff; border-radius:8px; text-decoration:none;">編集</a>
+
+
+        <!-- 削除ボタン -->
+        <form action="{% url 'delete' meal.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="delete-btn">削除</button>
+        </form>
       </div>
-      <div class="meal-card">
-        <h3>昼食</h3>
-        <p>・ラーメン</p>
-        <p>カロリー: 600 kcal</p>
-      </div>
-      <div class="meal-card">
-        <h3>夕食</h3>
-        <p>・焼き魚定食</p>
-        <p>カロリー: 550 kcal</p>
-      </div>
-      <div class="meal-card">
-        <h3>間食</h3>
-        <p>・チョコレート</p>
-        <p>カロリー: 200 kcal</p>
-      </div>
+      {% empty %}
+      <p>まだ食事が登録されていません。</p>
+      {% endfor %}
     </div>
 
-    <div class="total">合計: 1800 kcal</div>
+    <div class="total">
+      合計: {{ meals|length }} 件の食事
+    </div>
 
-    <button class="add-btn">＋ 食事を追加</button>
+    <a href="{% url 'create' %}" class="add-btn">＋ 食事を追加</a>
+
   </main>
 
 </body>
 </html>
+
